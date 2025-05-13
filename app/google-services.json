@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "966178788733",
+    "project_id": "aqua-track-2",
+    "storage_bucket": "aqua-track-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966178788733:android:e2d49b58a5e37e49e6e814",
+        "android_client_info": {
+          "package_name": "com.arise.aquatrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ4wdSmOHybuILibFwHyj6TRl40-7iJGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
