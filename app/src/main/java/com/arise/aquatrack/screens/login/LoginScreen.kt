@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 //import com.arise.aquatrack.R
-import com.arise.fromtheashes.R
+import com.arise.aquatrack.R
 import com.arise.aquatrack.data.AuthViewModel
 import com.arise.aquatrack.navigation.ROUTE_DASHBOARD
 

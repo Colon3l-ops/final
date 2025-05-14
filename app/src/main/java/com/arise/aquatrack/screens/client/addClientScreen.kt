@@ -27,7 +27,7 @@ import com.arise.aquatrack.ui.theme.blue2
 import com.arise.aquatrack.ui.theme.green1
 import com.arise.aquatrack.ui.theme.newwhite
 import com.arise.aquatrack.ui.theme.red
-import com.arise.fromtheashes.R
+import com.arise.aquatrack.R
 
 @Composable
 fun AddClientScreen(navController: NavController) {

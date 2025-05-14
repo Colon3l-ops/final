@@ -33,7 +33,7 @@ import com.arise.aquatrack.data.AuthViewModel
 import com.arise.aquatrack.ui.theme.blue2
 import com.arise.aquatrack.ui.theme.green1
 import com.arise.aquatrack.ui.theme.newwhite
-import com.arise.fromtheashes.R
+import com.arise.aquatrack.R
 
 @Composable
 fun RegisterScreen(navController: NavHostController) {
@@ -55,7 +55,7 @@ fun RegisterScreen(navController: NavHostController) {
     ) {
         // Logo
         Image(
-            painter = painterResource(id=R.drawable.som),
+            painter = painterResource(id=R.drawable.img1),
             contentDescription = "Logo",
             modifier = Modifier
                 .size(64.dp)

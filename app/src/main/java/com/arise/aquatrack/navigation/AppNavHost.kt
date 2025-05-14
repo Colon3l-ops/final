@@ -23,7 +23,7 @@ import com.arise.aquatrack.screens.viewClientScreen.ViewClientsScreen
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_HOME
+    startDestination: String = ROUTE_DASHBOARD
 ) {
     NavHost(
         modifier = modifier,

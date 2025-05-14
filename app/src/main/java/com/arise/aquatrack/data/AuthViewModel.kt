@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.navigation.NavHostController
 import com.arise.aquatrack.model.User
 import com.arise.aquatrack.navigation.ROUTE_ADD_CLIENT
+import com.arise.aquatrack.navigation.ROUTE_DASHBOARD
 import com.arise.aquatrack.navigation.ROUTE_LOGIN
 import com.arise.aquatrack.navigation.ROUTE_REGISTER
 import com.google.firebase.auth.FirebaseAuth
@@ -27,7 +28,7 @@ class AuthViewModel (
                       .addOnCompleteListener {
                           if (it.isSuccessful){
                               Toast.makeText(context,("Registered Successfully"),Toast.LENGTH_LONG).show()
-                              navController.navigate(ROUTE_LOGIN)
+                              navController.navigate(ROUTE_DASHBOARD)
 
                           }else{
                               Toast.makeText(context,"${it.exception!!.message}",Toast.LENGTH_LONG).show()

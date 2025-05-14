@@ -48,7 +48,7 @@ fun AddProductsScreen(navController: NavHostController) {
     ) {
         // Header Section
         Text(
-            text = "Add Product",
+            text = "Add Inventory",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,

@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 //import com.arise.aquatrack.R
-import com.arise.fromtheashes.R
+import com.arise.aquatrack.R
 import com.arise.aquatrack.navigation.ROUTE_HOME
 import com.arise.aquatrack.ui.theme.blue2
 import com.arise.aquatrack.ui.theme.green1
@@ -60,7 +60,7 @@ fun SplashScreen(navController: NavHostController) {
         ) {
             // Logo
             Image(
-                painter = painterResource(id = R.drawable.kj),
+                painter = painterResource(id = R.drawable.img1),
                 contentDescription = "Splash Logo",
                 modifier = Modifier
                     .size(180.dp)

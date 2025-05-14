@@ -25,7 +25,7 @@ import com.arise.aquatrack.data.ClientViewModel
 import com.arise.aquatrack.model.ClientModel
 import com.arise.aquatrack.ui.theme.blue2
 import com.arise.aquatrack.ui.theme.green1
-import com.arise.fromtheashes.R
+import com.arise.aquatrack.R
 import com.arise.aquatrack.ui.theme.red
 import com.google.firebase.database.*
 import androidx.compose.material3.OutlinedTextFieldDefaults.colors

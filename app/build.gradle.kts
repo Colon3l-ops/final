@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.arise.fromtheashes"
+    namespace = "com.arise.aquatrack"
     compileSdk = 35
 
     defaultConfig {

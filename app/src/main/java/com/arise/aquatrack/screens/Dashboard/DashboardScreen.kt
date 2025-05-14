@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.arise.aquatrack.navigation.ROUTE_ADD_CLIENT
 import androidx.core.net.toUri
-import com.arise.fromtheashes.R
+import com.arise.aquatrack.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +33,7 @@ fun DashboardScreen(navController: NavController) {
 
     Scaffold(
         bottomBar = {
-            NavigationBar(containerColor = Color.Red) {
+            NavigationBar(containerColor = Color.Blue) {
                 NavigationBarItem(
                     selected = selectedItem.intValue == 0,
                     onClick = {
@@ -112,11 +112,11 @@ fun DashboardScreen(navController: NavController) {
                         Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
                     }
                     IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Filled.Close, contentDescription = "Logout")
+                        Icon(imageVector = Icons.Filled.ExitToApp, contentDescription = "Logout")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Red,
+                    containerColor = Color.Blue,
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White,
                     actionIconContentColor = Color.White
@@ -131,7 +131,7 @@ fun DashboardScreen(navController: NavController) {
 
             Row(modifier = Modifier.wrapContentWidth()) {
                 DashboardCard("Staff") { navController.navigate("staff") }
-                DashboardCard("Testimonials") { navController.navigate("testimonials") }
+//                DashboardCard("Testimonials") { navController.navigate("testimonials") }
                 DashboardCard("Drilling Crew") { navController.navigate("crew") }
             }
         }
