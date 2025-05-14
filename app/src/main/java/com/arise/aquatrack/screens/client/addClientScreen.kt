@@ -30,7 +30,7 @@ import com.arise.aquatrack.ui.theme.green1
 import com.arise.aquatrack.ui.theme.newwhite
 import com.arise.aquatrack.ui.theme.red
 import com.arise.aquatrack.R
-import com.arise.aquatrack.screens.Dashboard.DashboardScreen
+
 
 @Composable
 fun AddClientScreen(navController: NavController) {

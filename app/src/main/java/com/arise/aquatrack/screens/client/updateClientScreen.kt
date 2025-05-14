@@ -191,8 +191,7 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun UpdateClientScreenPreview() {
-    updateClientScreen(rememberNavController())
+    UpdateClientScreen(rememberNavController(), clientId = String.toString())
 }
 
-fun updateClientScreen(controller: NavHostController) {}
 

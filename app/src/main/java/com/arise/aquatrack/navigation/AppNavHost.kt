@@ -24,7 +24,7 @@ import com.arise.aquatrack.screens.viewClientScreen.ViewClientsScreen
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_LOGIN
+    startDestination: String = ROUTE_DASHBOARD
 ) {
     NavHost(
         modifier = modifier,
@@ -46,6 +46,9 @@ fun AppNavHost(
         composable(ROUTE_ADD_PRODUCT) {
             AddProductsScreen(navController)
         }
+//        composable(ROUTE_EQUIPMENT) {
+//            EquipmentScreen(navController)
+//        }
         composable(ROUTE_ADD_EQUIPMENT) {
             AddEquipmentScreen(navController)
         }
