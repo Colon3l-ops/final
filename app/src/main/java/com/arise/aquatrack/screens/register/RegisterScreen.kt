@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -34,9 +36,13 @@ import com.arise.aquatrack.ui.theme.blue2
 import com.arise.aquatrack.ui.theme.green1
 import com.arise.aquatrack.ui.theme.newwhite
 import com.arise.aquatrack.R
+import com.arise.aquatrack.ui.theme.blush
 
 @Composable
 fun RegisterScreen(navController: NavHostController) {
+    val calibriFont = FontFamily(
+        Font(R.font.calibril, FontWeight.Normal)
+    )
     val context = LocalContext.current
 
     var fname by remember { mutableStateOf(TextFieldValue("")) }
@@ -67,6 +73,7 @@ fun RegisterScreen(navController: NavHostController) {
         Text(
             text = "Register",
             fontSize = 30.sp,
+            fontFamily = calibriFont,
             fontWeight = FontWeight.Bold,
             color = newwhite
         )
@@ -75,7 +82,8 @@ fun RegisterScreen(navController: NavHostController) {
 
         Text(
             text = "Create an account",
-            fontSize = 16.sp,
+            fontSize = 17.sp,
+            fontFamily = calibriFont,
             color = newwhite
         )
 

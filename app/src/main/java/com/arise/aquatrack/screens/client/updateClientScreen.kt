@@ -30,6 +30,10 @@ import com.arise.aquatrack.ui.theme.red
 import com.google.firebase.database.*
 import androidx.compose.material3.OutlinedTextFieldDefaults.colors
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.arise.aquatrack.screens.Dashboard.DashboardScreen
 
 
 @Composable
@@ -183,3 +187,12 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
         }
     }
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun UpdateClientScreenPreview() {
+    updateClientScreen(rememberNavController())
+}
+
+fun updateClientScreen(controller: NavHostController) {}
+

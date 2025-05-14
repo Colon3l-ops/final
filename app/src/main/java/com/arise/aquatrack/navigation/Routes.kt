@@ -13,3 +13,4 @@ const val ROUTE_ADD_CLIENT = "addclient" // Updated route for adding a client
 const val ROUTE_SPLASH_SCREEN = "splashscreen"
 const val ROUTE_VIEW_CLIENTS = "viewclients" // Updated route for viewing clients
 const val ROUTE_UPDATE_CLIENT = "updateclient" // Updated route for updating a client
+const val ROUTE_ADD_EQUIPMENT = "addequipment" // Updated route for adding equipments

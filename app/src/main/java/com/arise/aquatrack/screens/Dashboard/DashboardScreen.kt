@@ -24,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.arise.aquatrack.navigation.ROUTE_ADD_CLIENT
 import androidx.core.net.toUri
 import com.arise.aquatrack.R
+import com.arise.aquatrack.navigation.ROUTE_VIEW_CLIENTS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -124,7 +125,7 @@ fun DashboardScreen(navController: NavController) {
             )
 
             Row(modifier = Modifier.wrapContentWidth()) {
-                DashboardCard("Clients") { navController.navigate("clients") }
+                DashboardCard("Clients") { navController.navigate(ROUTE_VIEW_CLIENTS) }
                 DashboardCard("Equipment") { navController.navigate("equipment") }
                 DashboardCard("Projects") { navController.navigate("projects") }
             }

@@ -17,10 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.arise.aquatrack.data.ClientViewModel
 import com.arise.aquatrack.ui.theme.blue2
@@ -28,6 +30,7 @@ import com.arise.aquatrack.ui.theme.green1
 import com.arise.aquatrack.ui.theme.newwhite
 import com.arise.aquatrack.ui.theme.red
 import com.arise.aquatrack.R
+import com.arise.aquatrack.screens.Dashboard.DashboardScreen
 
 @Composable
 fun AddClientScreen(navController: NavController) {
@@ -159,4 +162,11 @@ fun AddClientScreen(navController: NavController) {
 fun TextFieldDefaults.outlinedTextFieldColors(textColor: Color): TextFieldColors {
     return TODO("Provide the return value")
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun addClientScreenPreview() {
+    AddClientScreen(rememberNavController())
+}
+
 
