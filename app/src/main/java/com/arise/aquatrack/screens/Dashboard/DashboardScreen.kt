@@ -19,18 +19,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-//import com.arise.aquatrack.R
 import androidx.navigation.compose.rememberNavController
-import com.arise.aquatrack.navigation.ROUTE_ADD_CLIENT
-import androidx.core.net.toUri
 import com.arise.aquatrack.R
+import com.arise.aquatrack.navigation.ROUTE_ADD_CLIENT
 import com.arise.aquatrack.navigation.ROUTE_VIEW_CLIENTS
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(navController: NavController) {
     val selectedItem = remember { mutableIntStateOf(0) }
     val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         bottomBar = {
@@ -41,7 +41,7 @@ fun DashboardScreen(navController: NavController) {
                         selectedItem.intValue = 0
                         val sendIntent = Intent().apply {
                             action = Intent.ACTION_SEND
-                            putExtra(Intent.EXTRA_TEXT, "Download here: https://www.download.com")
+                            putExtra(Intent.EXTRA_TEXT, "Download here: https://www.github.com")
                             type = "text/plain"
                         }
                         val shareIntent = Intent.createChooser(sendIntent, null)
@@ -85,7 +85,7 @@ fun DashboardScreen(navController: NavController) {
 
         Box {
             Image(
-                painter = painterResource(id =  R.drawable.img1),
+                painter = painterResource(id = R.drawable.img1),
                 contentDescription = "background image",
                 modifier = Modifier
                     .fillMaxSize()
@@ -112,7 +112,9 @@ fun DashboardScreen(navController: NavController) {
                     IconButton(onClick = {}) {
                         Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
                     }
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        showDialog = true
+                    }) {
                         Icon(imageVector = Icons.Filled.ExitToApp, contentDescription = "Logout")
                     }
                 },
@@ -132,9 +134,31 @@ fun DashboardScreen(navController: NavController) {
 
             Row(modifier = Modifier.wrapContentWidth()) {
                 DashboardCard("Staff") { navController.navigate("staff") }
-//                DashboardCard("Testimonials") { navController.navigate("testimonials") }
                 DashboardCard("Drilling Crew") { navController.navigate("crew") }
+                DashboardCard("Products") { navController.navigate("viewproducts") }
             }
+        }
+
+        // Confirmation Dialog for Exit
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                title = { Text("Confirm Exit") },
+                text = { Text("Are you sure you want to exit the app?") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showDialog = false
+                        (context as? android.app.Activity)?.finishAffinity()
+                    }) {
+                        Text("Yes")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog = false }) {
+                        Text("No")
+                    }
+                }
+            )
         }
     }
 }

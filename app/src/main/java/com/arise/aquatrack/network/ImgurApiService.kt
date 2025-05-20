@@ -1,6 +1,7 @@
 package com.arise.aquatrack.network
 
-import com.arise.aquatrack.model.ImgurUploadResponse
+import com.arise.aquatrack.model.ImgurResponse
+//import com.arise.aquatrack.model.ImgurUploadResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Header
@@ -14,5 +15,5 @@ interface ImgurService {
     suspend fun uploadImage(
         @Part image: MultipartBody.Part,
         @Header("Authorization") clientId: String
-    ): Response<ImgurUploadResponse>
+    ): Response<ImgurResponse>
 }

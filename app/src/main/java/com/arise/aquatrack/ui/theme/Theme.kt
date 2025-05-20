@@ -3,34 +3,55 @@ package com.arise.aquatrack.ui.theme
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
+//import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+// AquaTrackColors.kt
+
+val AquaPrimary = Color(0xFF0077B6)  // Deep Blue
+val AquaSecondary = Color(0xFF00B4D8) // Aqua Blue
+val AquaBackground = Color(0xFFE0F7FA)
+val AquaSurface = Color.White
+val AquaOnPrimary = Color.White
+val AquaOnSecondary = Color.Black
+
+private val AquaColorScheme = lightColorScheme(
+    primary = AquaPrimary,
+    secondary = AquaSecondary,
+    background = AquaBackground,
+    surface = AquaSurface,
+    onPrimary = AquaOnPrimary,
+    onSecondary = AquaOnSecondary,
+    onBackground = Color.Black,
+    onSurface = Color.Black
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+////private val DarkColorScheme = darkColorScheme(
+////    primary = Purple80,
+////    secondary = PurpleGrey80,
+////    tertiary = Pink80
+////)
+//
+////private val LightColorScheme = lightColorScheme(
+////    primary = Purple40,
+////    secondary = PurpleGrey40,
+////    tertiary = Pink40
+//
+//    /* Other default colors to override
+//    background = Color(0xFFFFFBFE),
+//    surface = Color(0xFFFFFBFE),
+//    onPrimary = Color.White,
+//    onSecondary = Color.White,
+//    onTertiary = Color.White,
+//    onBackground = Color(0xFF1C1B1F),
+//    onSurface = Color(0xFF1C1B1F),
+//    */
+//)
 
 @Composable
 fun FromTheAshesTheme(
@@ -45,8 +66,8 @@ fun FromTheAshesTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> AquaColorScheme
+        else -> AquaColorScheme
     }
 
     MaterialTheme(
@@ -55,3 +76,14 @@ fun FromTheAshesTheme(
         content = content
     )
 }
+//@Composable
+//fun AquaTrackTheme(
+//    content: @Composable () -> Unit
+//) {
+//    MaterialTheme(
+//        colorScheme = AquaColorScheme,
+//        typography = Typography,
+////        shapes = Shapes,
+//        content = content
+//    )
+//}

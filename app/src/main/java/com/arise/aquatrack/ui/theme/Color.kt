@@ -2,6 +2,10 @@ package com.arise.aquatrack.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+//new
+//val LightBlue = Color(0xFFE0F7FA)
+//val DeepBlue = Color(0xFF0077B6)
+
 
 val neworange = Color(0xFFFF5722)
 val neworange1 = Color(0xD0DA8C74)

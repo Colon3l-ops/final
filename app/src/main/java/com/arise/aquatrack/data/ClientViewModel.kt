@@ -13,7 +13,10 @@ import com.arise.aquatrack.model.ClientModel
 import com.arise.aquatrack.navigation.ROUTE_VIEW_CLIENTS
 import com.arise.aquatrack.network.ImgurService
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -24,6 +27,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.util.UUID
 
 class ClientViewModel : ViewModel() {
     private val database = FirebaseDatabase.getInstance().reference.child("Clients")
@@ -59,67 +63,83 @@ class ClientViewModel : ViewModel() {
         }
     }
 
-    fun uploadClientWithImage(
-        uri: Uri,
-        context: Context,
-        name: String,
-        contact: String,
-        location: String,
-        notes: String,
-        navController: NavController
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val file = getFileFromUri(context, uri)
-                if (file == null) {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Failed to process image", Toast.LENGTH_SHORT).show()
-                    }
-                    return@launch
+private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+fun uploadClientWithImage(
+    uri: Uri,
+    context: Context,
+    name: String,
+    location: String,
+    notes: String,
+    contact: String,
+    navController: NavController
+) {
+    viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val file = getFileFromUri(context, uri)
+            if (file == null) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Failed to process image", Toast.LENGTH_SHORT).show()
                 }
+                return@launch
+            }
 
-                val reqFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                val body = MultipartBody.Part.createFormData("image", file.name, reqFile)
+            val reqFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("image", file.name, reqFile)
 
-                val response = getImgurService().uploadImage(
-                    body,
-                    "Client-ID bec2e37e4bd3088"
+            val response = getImgurService().uploadImage(
+                body,
+                "Client-ID bec2e37e4bd3088"
+            )
+
+            if (response.isSuccessful) {
+                val imageUrl = response.body()?.data?.link ?: ""
+                ////today
+
+                val clientId = database.push().key ?: ""
+                val client = ClientModel(
+                    name = name,  // Added name
+                    location= location, // Added region
+                    notes = notes, // Added description = description, // Added description
+                    contact = contact, // Added price = price, // Changed to String
+                    imageUrl = imageUrl,
+                    clientId = clientId
+                    // Added imageUrl
+
                 )
 
-                if (response.isSuccessful) {
-                    val imageUrl = response.body()?.data?.link ?: ""
-                    val clientId = database.push().key ?: ""
-                    val client = ClientModel(name, contact, location, notes, imageUrl, clientId)
-
-                    database.child(clientId).setValue(client)
-                        .addOnSuccessListener {
-                            viewModelScope.launch {
-                                withContext(Dispatchers.Main) {
-                                    Toast.makeText(context, "Client saved successfully", Toast.LENGTH_SHORT).show()
-                                    navController.navigate(ROUTE_VIEW_CLIENTS)
-                                }
+                database.child(clientId).setValue(client)
+                    .addOnSuccessListener {
+                        viewModelScope.launch {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Product saved successfully", Toast.LENGTH_SHORT).show()
+//                                loadSellerProducts()
+                                navController.navigate(ROUTE_VIEW_CLIENTS)
                             }
                         }
-                        .addOnFailureListener {
-                            viewModelScope.launch {
-                                withContext(Dispatchers.Main) {
-                                    Toast.makeText(context, "Failed to save client", Toast.LENGTH_SHORT).show()
-                                }
+                    }.addOnFailureListener {
+                        viewModelScope.launch {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Failed to save product", Toast.LENGTH_SHORT).show()
                             }
                         }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Upload error", Toast.LENGTH_SHORT).show()
                     }
-                }
 
-            } catch (e: Exception) {
+            } else {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "Exception: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Upload error", Toast.LENGTH_SHORT).show()
                 }
+            }
+
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, "Exception: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
             }
         }
     }
+}
+
+
 
     fun viewClients(
         client: MutableState<ClientModel>,
@@ -151,24 +171,37 @@ class ClientViewModel : ViewModel() {
     fun updateClient(
         context: Context,
         navController: NavController,
+        clientId: String,
         name: String,
         contact: String,
         location: String,
         notes: String,
-        clientId: String
+//        newImageUri: Uri?,
+//        onComplete: (Boolean) -> Unit
     ) {
-        val databaseReference = FirebaseDatabase.getInstance().getReference("Clients/$clientId")
-        val updatedClient = ClientModel(name, contact, location, notes, "", clientId)
+        val updates = mapOf(
+            "name" to name,
+            "price" to contact,
+            "region" to location,
+            "description" to notes
+        )
 
-        databaseReference.setValue(updatedClient)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(context, "Client Updated Successfully", Toast.LENGTH_LONG).show()
-                    navController.navigate(ROUTE_VIEW_CLIENTS)
-                } else {
-                    Toast.makeText(context, "Client update failed", Toast.LENGTH_LONG).show()
-                }
-            }
+//        if (newImageUri != null) {
+//            val storageRef = FirebaseStorage.getInstance().reference
+//                .child("client_images/${UUID.randomUUID()}")
+//            storageRef.putFile(newImageUri).addOnSuccessListener {
+//                storageRef.downloadUrl.addOnSuccessListener { uri ->
+//                    val updatedWithImage = updates + ("imageUrl" to uri.toString())
+//                    database.child("Clients").child(clientId).updateChildren(updatedWithImage)
+//                        .addOnCompleteListener { task -> onComplete(task.isSuccessful) }
+//                }
+//            }.addOnFailureListener {
+//                onComplete(false)
+//            }
+//        } else {
+//            database.child("products").child(clientId).updateChildren(updates)
+//                .addOnCompleteListener { task -> onComplete(task.isSuccessful) }
+//        }
     }
 
     fun deleteClient(

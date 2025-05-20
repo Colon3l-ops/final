@@ -1,99 +1,95 @@
 package com.arise.aquatrack.screens.splash
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-//import com.arise.aquatrack.R
+import androidx.navigation.NavController
 import com.arise.aquatrack.R
 import com.arise.aquatrack.navigation.ROUTE_HOME
-import com.arise.aquatrack.ui.theme.blue2
-import com.arise.aquatrack.ui.theme.green1
-import com.arise.aquatrack.ui.theme.newwhite
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
-    var progress by remember { mutableStateOf(0f) }
+fun SplashScreen(navController: NavController) {
+    // Animate scale (pulsating effect)
+    val scale = remember { Animatable(0f) }
 
-    // Animate the loading over 3 seconds
-    LaunchedEffect(Unit) {
-        val totalSteps = 60
-        repeat(totalSteps) {
-            progress = it / totalSteps.toFloat()
-            delay(50) // 60 * 50ms = 3000ms (3 seconds)
-        }
-        progress = 1f
-        delay(200)
+    // Trigger animation on launch
+    LaunchedEffect(true) {
+        scale.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(1500, easing = EaseOutElastic)
+        )
+        delay(2500)
         navController.navigate(ROUTE_HOME) {
-            popUpTo("splashscreen") { inclusive = true }
+            popUpTo(0) // Remove splash screen from backstack
         }
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(blue2),
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF001F3F),
+                        Color(0xFF0074D9)
+                    )
+                )
+            ),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            // Logo
-            Image(
-                painter = painterResource(id = R.drawable.img1),
-                contentDescription = "Splash Logo",
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
                 modifier = Modifier
-                    .size(180.dp)
-                    .clip(CircleShape)
-            )
+                    .size(140.dp)
+                    .scale(scale.value)
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(Color(0xFF00BFFF), Color(0xFF001F3F)),
+                            radius = 200f
+                        ),
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.water_drop), // Add water_drop.png to res/drawable
+                    contentDescription = "Water Drop Logo",
+                    modifier = Modifier.size(80.dp)
+                )
+            }
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Loading Percentage
             Text(
-                text = "${(progress * 100).toInt()}%",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Medium,
-                color = newwhite
+                text = "AquaTrack",
+                fontSize = 32.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Linear Progress Bar
-            LinearProgressIndicator(
-                progress = progress,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(8.dp),
-                color = green1,
-                trackColor = Color.LightGray.copy(alpha = 0.3f)
+            Text(
+                text = "Empowering Clean Water Projects",
+                fontSize = 16.sp,
+                color = Color(0xFFB3E5FC),
+                fontWeight = FontWeight.Medium
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SplashScreenPreview() {
-    SplashScreen(navController = rememberNavController())
 }

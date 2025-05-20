@@ -116,7 +116,7 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
             onValueChange = { name = it },
             label = { Text("Client Name") },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Color.White)
+//            colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Color.White)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -126,7 +126,7 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
             onValueChange = { contact = it },
             label = { Text("Contact Info") },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Color.White)
+//            colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Color.White)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -136,7 +136,7 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
             onValueChange = { location = it },
             label = { Text("Location") },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Color.White)
+//            colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Color.White)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -166,7 +166,6 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
             }
 
             Spacer(modifier = Modifier.width(16.dp))
-
             Button(
                 onClick = {
                     clientViewModel.updateClient(
@@ -176,7 +175,16 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
                         contact = contact,
                         location = location,
                         notes = notes,
-                        clientId = clientId
+                        clientId = clientId,
+//                        newImageUri = imageUri.value, // ✅ Corrected
+//                        onComplete = { success ->
+//                            if (success) {
+//                                Toast.makeText(context, "Client updated successfully", Toast.LENGTH_SHORT).show()
+//                                navController.popBackStack()
+//                            } else {
+//                                Toast.makeText(context, "Failed to update client", Toast.LENGTH_SHORT).show()
+//                            }
+//                        }
                     )
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = green1),
@@ -184,6 +192,34 @@ fun UpdateClientScreen(navController: NavController, clientId: String) {
             ) {
                 Text("Update", color = Color.White)
             }
+
+
+//            Button(
+//                onClick = {
+//                    clientViewModel.updateClient(
+//                        context = context,
+//                        navController = navController,
+//                        name = name,
+//                        contact = contact,
+//                        location = location,
+//                        notes = notes,
+//                        clientId = clientId,
+//                        newImageUri = imageUri,
+//                        onComplete = { success ->
+//                            if (success) {
+//                                Toast.makeText(context, "Client updated successfully", Toast.LENGTH_SHORT).show()
+//                                navController.popBackStack()
+//                            } else {
+//                                Toast.makeText(context, "Failed to update client", Toast.LENGTH_SHORT).show()
+//                            }
+//                        }
+//                    )
+//                },
+//                colors = ButtonDefaults.buttonColors(containerColor = green1),
+//                modifier = Modifier.weight(1f)
+//            ) {
+//                Text("Update", color = Color.White)
+//            }
         }
     }
 }

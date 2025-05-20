@@ -14,17 +14,20 @@ import com.arise.aquatrack.screens.products.UpdateProductsScreen
 import com.arise.aquatrack.screens.products.ViewProductsScreen
 import com.arise.aquatrack.screens.register.RegisterScreen
 import com.arise.aquatrack.screens.splash.SplashScreen
+import com.arise.aquatrack.screens.equipment.ViewEquipmentsScreen
 import com.arise.aquatrack.screens.client.AddClientScreen // Updated for clients
 import com.arise.aquatrack.screens.client.UpdateClientScreen // Updated for clients
 import com.arise.aquatrack.screens.products.AddEquipmentScreen
-import com.arise.aquatrack.screens.viewClientScreen.ViewClientsScreen
+import com.arise.aquatrack.screens.client.ViewClientsScreen
+import com.arise.aquatrack.ui.screens.ProjectsScreen
+
 //import com.arise.aquatrack.screens.client.ViewClientScreen
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_DASHBOARD
+    startDestination: String = ROUTE_PROJECTS
 ) {
     NavHost(
         modifier = modifier,
@@ -46,14 +49,17 @@ fun AppNavHost(
         composable(ROUTE_ADD_PRODUCT) {
             AddProductsScreen(navController)
         }
-//        composable(ROUTE_EQUIPMENT) {
-//            EquipmentScreen(navController)
-//        }
+        composable(ROUTE_EQUIPMENT) {
+            ViewEquipmentsScreen(navController)
+        }
         composable(ROUTE_ADD_EQUIPMENT) {
             AddEquipmentScreen(navController)
         }
         composable(ROUTE_VIEW_PRODUCT) {
             ViewProductsScreen(navController)
+        }
+        composable(ROUTE_PROJECTS) {
+            ProjectsScreen(navController)
         }
         composable(ROUTE_UPDATE_PRODUCT + "/{id}") { passedData ->
             UpdateProductsScreen(navController, passedData.arguments!!.getString("id")!!)

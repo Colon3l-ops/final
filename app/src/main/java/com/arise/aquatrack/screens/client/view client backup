@@ -1,0 +1,211 @@
+package com.arise.aquatrack.screens.client
+
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import com.arise.aquatrack.data.ClientViewModel
+import com.arise.aquatrack.model.ClientModel
+import com.arise.aquatrack.navigation.ROUTE_ADD_CLIENT
+import com.arise.aquatrack.navigation.ROUTE_UPDATE_CLIENT
+import com.arise.aquatrack.ui.theme.blue2
+import com.arise.aquatrack.ui.theme.green1
+import com.arise.aquatrack.ui.theme.red
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ViewClientsScreen(navController: NavHostController) {
+    val context = LocalContext.current
+    val clientRepository = ClientViewModel()
+    val emptyClientState = remember { mutableStateOf(ClientModel("", "", "", "", "", "")) }
+    val clientListState = remember { mutableStateListOf<ClientModel>() }
+    val clients = clientRepository.viewClients(emptyClientState, clientListState, context)
+
+    val fabScale = remember { Animatable(0f) }
+
+    LaunchedEffect(Unit) {
+        fabScale.animateTo(
+            targetValue = 1f,
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )
+        )
+    }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("All Clients", fontWeight = FontWeight.Bold, color = Color(0xFF64B5F6))
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF1B1F3B)
+                )
+            )
+        },
+        containerColor = Color(0xFF0A0E23)
+    ) { paddingValues ->
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+            ) {
+                items(clients.size) { index ->
+                    val client = clients[index]
+                    var visible by remember { mutableStateOf(false) }
+
+                    LaunchedEffect(Unit) {
+                        visible = true
+                    }
+
+                    AnimatedVisibility(
+                        visible = visible,
+                        enter = slideInHorizontally(
+                            initialOffsetX = { it / 2 },
+                            animationSpec = tween(durationMillis = 400, delayMillis = index * 100)
+                        ) + fadeIn(animationSpec = tween(400)),
+                        exit = fadeOut()
+                    ) {
+                        ClientItem(client = client, navController = navController, clientRepository = clientRepository)
+                    }
+                }
+            }
+
+            FloatingActionButton(
+                onClick = { navController.navigate("addclient") },
+                containerColor = green1,
+                shape = CircleShape,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp)
+                    .graphicsLayer(scaleX = fabScale.value, scaleY = fabScale.value)
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add", tint = Color.White)
+            }
+        }
+    }
+}
+
+@Composable
+fun ClientItem(
+    client: ClientModel,
+    navController: NavHostController,
+    clientRepository: ClientViewModel
+) {
+    val context = LocalContext.current
+
+    Card(
+        modifier = Modifier
+            .padding(vertical = 10.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E2746))
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(verticalAlignment = Alignment.Top) {
+                AsyncImage(
+                    model = client.imageUrl,
+                    contentDescription = "Client Image",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(120.dp)
+                        .height(120.dp)
+                        .padding(end = 12.dp)
+                )
+
+                Column(modifier = Modifier.weight(1f)) {
+                    ClientDetail(label = "CLIENT NAME", value = client.name)
+                    ClientDetail(label = "CONTACT", value = client.contact)
+                    ClientDetail(label = "LOCATION", value = client.location)
+                    ClientDetail(label = "NOTES", value = client.notes)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Button(
+                    onClick = {
+                        clientRepository.deleteClient(context, client.clientId, navController)
+                    },
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = red),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("REMOVE", color = Color.White, fontWeight = FontWeight.Bold)
+                }
+
+                Button(
+                    onClick = {
+                        navController.navigate("$ROUTE_UPDATE_CLIENT/${client.clientId}")
+                    },
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = green1),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("UPDATE", color = Color.White, fontWeight = FontWeight.Bold)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ClientDetail(label: String, value: String) {
+    Column(modifier = Modifier.padding(bottom = 6.dp)) {
+        Text(
+            text = label,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color(0xFFBBDEFB)
+        )
+        Text(
+            text = value,
+            fontSize = 17.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF90CAF9)
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun ViewClientsScreenPreview() {
+    val dummyNavController = rememberNavController()
+    ViewClientsScreen(navController = dummyNavController)
+}
