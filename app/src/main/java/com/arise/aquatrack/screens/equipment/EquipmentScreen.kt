@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.arise.aquatrack.model.Equipment
+import com.arise.aquatrack.navigation.ROUTE_ADD_EQUIPMENT
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +52,7 @@ fun ViewEquipmentsScreen(navController: NavController) {
                 },
                 actions = {
                     IconButton(onClick = {
-                        navController.navigate("addequipment")
+                        navController.navigate(ROUTE_ADD_EQUIPMENT)
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,

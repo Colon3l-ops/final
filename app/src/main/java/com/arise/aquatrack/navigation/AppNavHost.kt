@@ -27,7 +27,7 @@ import com.arise.aquatrack.ui.screens.ProjectsScreen
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_PROJECTS
+    startDestination: String = ROUTE_DASHBOARD
 ) {
     NavHost(
         modifier = modifier,

@@ -1,6 +1,7 @@
 package com.arise.aquatrack.model
 
 data class Project(
+    val id: String = "", // <-- Add this line
     val name: String = "",
     val clientName: String = "",
     val location: String = "",
@@ -8,4 +9,5 @@ data class Project(
     val startDate: String = "",
     val endDate: String = ""
 )
+
 

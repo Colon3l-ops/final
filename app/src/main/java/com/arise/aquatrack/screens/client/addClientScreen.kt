@@ -272,7 +272,7 @@ fun AddClientScreen(
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text("Product Name") },
+                        label = { Text("Client Name") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
                     )

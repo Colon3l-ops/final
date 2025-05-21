@@ -22,4 +22,28 @@ object FirestoreService {
             }
             .addOnFailureListener { e -> onError(e) }
     }
+    fun updateProject(
+        project: Project,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("projects")
+            .document(project.id)
+            .set(project)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onFailure(it) }
+    }
+
+    fun deleteProject(
+        projectId: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("projects")
+            .document(projectId)
+            .delete()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onFailure(it) }
+    }
+
 }

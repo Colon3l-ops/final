@@ -12,6 +12,7 @@ val neworange1 = Color(0xD0DA8C74)
 val yellow1 = Color(0xFFFFC107)
 val newwhite = Color(0xF2E4EAE9)
 val green1 = Color(0xF2167364)
+val DeepBlue = Color(0xFF1565C0) // You can use any hex color you like
 
 // Reds
 val red = Color(0xFFFF0000)
