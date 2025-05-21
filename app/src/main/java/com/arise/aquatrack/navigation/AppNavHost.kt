@@ -19,7 +19,7 @@ import com.arise.aquatrack.screens.client.AddClientScreen // Updated for clients
 import com.arise.aquatrack.screens.client.UpdateClientScreen // Updated for clients
 import com.arise.aquatrack.screens.products.AddEquipmentScreen
 import com.arise.aquatrack.screens.client.ViewClientsScreen
-import com.arise.aquatrack.ui.screens.ProjectsScreen
+import com.arise.aquatrack.screens.projects.ProjectsScreen
 
 //import com.arise.aquatrack.screens.client.ViewClientScreen
 
@@ -27,7 +27,7 @@ import com.arise.aquatrack.ui.screens.ProjectsScreen
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_DASHBOARD
+    startDestination: String = ROUTE_PROJECTS
 ) {
     NavHost(
         modifier = modifier,

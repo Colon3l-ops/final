@@ -97,3 +97,8 @@ fun SplashScreen(navController: NavHostController) {
 fun SplashScreenPreview() {
     SplashScreen(navController = rememberNavController())
 }
+
+
+
+New chat: Win+Alt+C
+Show / hide: Win+Alt+A

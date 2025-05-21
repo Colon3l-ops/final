@@ -88,6 +88,8 @@ fun DashboardScreen(navController: NavController) {
                 painter = painterResource(id = R.drawable.img1),
                 contentDescription = "background image",
                 modifier = Modifier
+                    .height(100.dp)
+                    .padding(25.dp)
                     .fillMaxSize()
                     .padding(innerPadding),
                 contentScale = ContentScale.FillBounds
@@ -168,6 +170,7 @@ fun DashboardCard(title: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(10.dp)
+            .size(150.dp)
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(10.dp),
@@ -175,8 +178,7 @@ fun DashboardCard(title: String, onClick: () -> Unit) {
     ) {
         Box(
             modifier = Modifier
-                .height(100.dp)
-                .padding(25.dp),
+                .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(text = title, color = Color.White)
