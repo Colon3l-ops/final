@@ -1,4 +1,4 @@
-package com.arise.aquatrack.screens.projects
+package com.arise.aquatrack.ui.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -8,11 +8,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.arise.aquatrack.model.Project
 import com.arise.aquatrack.firebase.FirestoreService
 import com.arise.aquatrack.ui.components.AddProjectDialog
@@ -22,7 +23,7 @@ import com.arise.aquatrack.ui.theme.DeepBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProjectsScreen(navController: NavController) {
+fun ProjectsScreen(navHostController: NavHostController) {
     val context = LocalContext.current
     var projects by remember { mutableStateOf(listOf<Project>()) }
     var showAddDialog by remember { mutableStateOf(false) }
@@ -67,41 +68,20 @@ fun ProjectsScreen(navController: NavController) {
                     ProjectCard(
                         project = project,
                         onEditClick = { editingProject = it },
-//                        onDeleteClick = {
-//                            FirestoreService.deleteProject(it.id,
-//                                onSuccess = {
-//                                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
-//                                    FirestoreService.getProjects(
-//                                        onComplete = { projects = it },
-//                                        onError = {}
-//                                    )
-//                                },
-//                                onFailure = {
-//                                    Toast.makeText(context, "Delete failed: ${it.message}", Toast.LENGTH_SHORT).show()
-//                                }
-//                            )
-//                        }
                         onDeleteClick = {
-                            val id = it.id
-                            if (!id.isNullOrBlank()) {
-                                FirestoreService.deleteProject(
-                                    id,
-                                    onSuccess = {
-                                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
-                                        FirestoreService.getProjects(
-                                            onComplete = { projects = it },
-                                            onError = {}
-                                        )
-                                    },
-                                    onFailure = {
-                                        Toast.makeText(context, "Delete failed: ${it.message}", Toast.LENGTH_SHORT).show()
-                                    }
-                                )
-                            } else {
-                                Toast.makeText(context, "Invalid project ID", Toast.LENGTH_SHORT).show()
-                            }
+                            FirestoreService.deleteProject(it.id,
+                                onSuccess = {
+                                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
+                                    FirestoreService.getProjects(
+                                        onComplete = { projects = it },
+                                        onError = {}
+                                    )
+                                },
+                                onFailure = {
+                                    Toast.makeText(context, "Delete failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            )
                         }
-
                     )
                 }
             }

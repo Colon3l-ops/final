@@ -135,7 +135,7 @@ fun DashboardScreen(navController: NavController) {
             }
 
             Row(modifier = Modifier.wrapContentWidth()) {
-                DashboardCard("Products") { navController.navigate("viewproducts") }
+                DashboardCard("Projects") { navController.navigate("projects") }
                 DashboardCard("Staff") { navController.navigate("staff") }
                 DashboardCard("Drilling Crew") { navController.navigate("crew") }
             }

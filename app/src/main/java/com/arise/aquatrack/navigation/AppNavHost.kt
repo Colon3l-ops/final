@@ -19,7 +19,9 @@ import com.arise.aquatrack.screens.client.AddClientScreen // Updated for clients
 import com.arise.aquatrack.screens.client.UpdateClientScreen // Updated for clients
 import com.arise.aquatrack.screens.products.AddEquipmentScreen
 import com.arise.aquatrack.screens.client.ViewClientsScreen
-import com.arise.aquatrack.screens.projects.ProjectsScreen
+//import com.arise.aquatrack.screens.projects.EditProjectScreen
+//import com.arise.aquatrack.screens.projects.ProjectsScreen
+import com.arise.aquatrack.ui.screens.ProjectsScreen
 
 //import com.arise.aquatrack.screens.client.ViewClientScreen
 
@@ -27,7 +29,7 @@ import com.arise.aquatrack.screens.projects.ProjectsScreen
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_PROJECTS
+    startDestination: String = ROUTE_SPLASH_SCREEN
 ) {
     NavHost(
         modifier = modifier,
@@ -37,6 +39,16 @@ fun AppNavHost(
         composable(ROUTE_HOME) {
             Home_Screen(navController)
         }
+//        composable("editProject/{projectId}") { backStackEntry ->
+//            val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
+//            EditProjectScreen(
+//                db = db,
+//                projectId = projectId,
+//                onProjectUpdated = {
+//                    navController.popBackStack()
+//                }
+//            )
+//        }
         composable(ROUTE_LOGIN) {
             Login_Screen(navController)
         }
